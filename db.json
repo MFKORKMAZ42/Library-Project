@@ -1,0 +1,53 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "name": "Yaban ",
+      "author": "Yakup Kadri Karaosmanoğlu  ",
+      "categoryId": "1",
+      "isbn": "1111111111111"
+    },
+    {
+      "id": 2,
+      "name": "Yeraltından Notlar",
+      "author": "Dostoyevski",
+      "isbn": "1111111111112",
+      "categoryId": "2"
+    },
+    {
+      "id": 3,
+      "name": "Denemeler",
+      "author": "Montaigne",
+      "isbn": "1111111111113",
+      "categoryId": "3"
+    },
+    {
+      "id": 1663061415184,
+      "name": "SEYİR",
+      "author": "PİRAYE",
+      "categoryId": "1",
+      "isbn": ""
+    },
+    {
+      "id": 1663171107813,
+      "name": "Sineklerin Tanrısı 1",
+      "author": "William Golding  2",
+      "categoryId": "2",
+      "isbn": ""
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Roman"
+    },
+    {
+      "id": "2",
+      "name": "Hikaye"
+    },
+    {
+      "id": "3",
+      "name": "Deneme"
+    }
+  ]
+}
