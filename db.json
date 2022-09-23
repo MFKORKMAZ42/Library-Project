@@ -30,9 +30,23 @@
     },
     {
       "id": 1663171107813,
-      "name": "Sineklerin Tanrısı 1",
+      "name": "Sineklerin Tanrısı 2",
       "author": "William Golding  2",
       "categoryId": "2",
+      "isbn": ""
+    },
+    {
+      "id": 1663732651111,
+      "name": "abc xxx",
+      "author": "abcxxx",
+      "categoryId": "2",
+      "isbn": ""
+    },
+    {
+      "id": 1663863641248,
+      "name": "ghgfhn 123",
+      "author": "hngn 123",
+      "categoryId": "3",
       "isbn": ""
     }
   ],

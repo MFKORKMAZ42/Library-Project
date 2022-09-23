@@ -29,6 +29,11 @@ const Header = (props) => {
                 Kitaplar
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/categories">
+                Kategoriler
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

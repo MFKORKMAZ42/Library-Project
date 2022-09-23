@@ -2,31 +2,37 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
-import Modal from "./Modal";
+import Modal from "../compenents/Modal";
+import { useSelector, useDispatch } from "react-redux";
 
 const ListBooks = (props) => {
-  const [books, setBooks] = useState(null);
-  const [categories, setCategories] = useState(null);
+  const dispatch = useDispatch();
+  const { categoriesState, booksState } = useSelector((state) => state);
+  //console.log(categoriesState);
+  console.log("booksState", booksState);
+
+  //const [books, setBooks] = useState(null);
+  // const [categories, setCategories] = useState(null);
   const [didUpdate, setDidUpdate] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [silincekKitap, setSilinecekKitap] = useState(null);
   const [silinecekKitapIsmi, setSilinecekKitapIsmi] = useState("");
   useEffect(() => {
-    axios
-      .get("http://localhost:3004/books")
-      .then((resBook) => {
-        console.log(resBook);
-        setBooks(resBook.data);
-        axios
-          .get("http://localhost:3004/categories")
-          .then((resCat) => {
-            setTimeout(() => {
-              setCategories(resCat.data);
-            });
-          })
-          .catch((err) => console.log("categories err", err));
-      })
-      .catch((err) => console.log("books err", err));
+    // axios
+    //   .get("http://localhost:3004/books")
+    //   .then((resBook) => {
+    //     console.log(resBook);
+    //     setBooks(resBook.data);
+    //     // axios
+    //     //   .get("http://localhost:3004/categories")
+    //     //   .then((resCat) => {
+    //     //     setTimeout(() => {
+    //     //       setCategories(resCat.data);
+    //     //     });
+    //     //})
+    //     //.catch((err) => console.log("categories err", err));
+    //   })
+    //   .catch((err) => console.log("books err", err));
   }, [didUpdate]);
 
   const deleteBook = (id) => {
@@ -35,13 +41,14 @@ const ListBooks = (props) => {
       .delete(`http://localhost:3004/books/${id}`)
       .then((res) => {
         console.log("delete res", res);
+        dispatch({ type: "DELETE_BOOK", payload: id });
         setDidUpdate(!didUpdate);
         setShowModal(false);
       })
       .catch((err) => console.log(err));
   };
 
-  if (books === null || categories === null) {
+  if (booksState.success !== true || categoriesState.success !== true) {
     return <Loading />;
   }
   return (
@@ -67,8 +74,8 @@ const ListBooks = (props) => {
           </tr>
         </thead>
         <tbody>
-          {books.map((book) => {
-            const category = categories.find(
+          {booksState.books.map((book) => {
+            const category = categoriesState.categories.find(
               (cat) => cat.id === book.categoryId
             );
             return (

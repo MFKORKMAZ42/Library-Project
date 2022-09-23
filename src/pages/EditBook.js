@@ -6,37 +6,58 @@ import axios from "axios";
 import Header from "../compenents/Header";
 import Loading from "../compenents/Loading";
 import Modal from "../compenents/Modal";
+import { useSelector, useDispatch } from "react-redux";
 
 const EditBook = (props) => {
+  const dispatch = useDispatch();
+  const { categoriesState, booksState } = useSelector((state) => state);
   const params = useParams();
   const navigate = useNavigate();
   console.log("params", params);
 
-  const [bookname, setBookname] = useState("");
+  const [bookName, setBookName] = useState("");
   const [author, setAuthor] = useState("");
   const [isbn, setIsbn] = useState("");
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState(null);
+  //const [categories, setCategories] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3004/books/${params.bookId}`)
-      .then((res) => {
-        console.log(res.data);
-        setBookname(res.data.name);
-        setAuthor(res.data.author);
-        setIsbn(res.data.isbn);
-        setCategory(res.data.categoryId);
+    //console.log(booksState.books, params.kitapId);
 
-        axios
-          .get("http://localhost:3004/categories")
-          .then((res) => {
-            setCategories(res.data);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
+    const searchBook = booksState.books.find(
+      (item) => item.id == params.bookId
+    );
+    //document.title = `Library-Edit Book - ${searchBook.id}`;
+    if (searchBook === undefined) {
+      navigate("/");
+      return;
+    }
+
+    //console.log(arananKitap);
+    setBookName(searchBook.name);
+    setAuthor(searchBook.author);
+    setIsbn(searchBook.isbn);
+    setCategory(searchBook.categoryId);
+
+    // axios
+    //   .get(`http://localhost:3004/books/${params.kitapId}`)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setBookname(res.data.name);
+    //     setAuthor(res.data.author);
+    //     setIsbn(res.data.isbn);
+    //     setCategory(res.data.categoryId);
+
+    //     // axios
+    //     //   .get("http://localhost:3004/categories")
+    //     //   .then((res) => {
+    //     //     setCategories(res.data);
+    //     //   })
+    //     //   .catch((err) => console.log(err));
+    //   })
+    //   .catch((err) => console.log(err));
+    document.title = `Kitaplık - Kitap Düzenle -${searchBook.name}`;
   }, []);
 
   const handleSubmit = (event) => {
@@ -45,29 +66,30 @@ const EditBook = (props) => {
   };
 
   const editBook = () => {
-    if (bookname === "" || author === "" || category === "") {
+    if (bookName === "" || author === "" || category === "") {
       alert("Kitap adı, Kitap Yazarı ve Kategori boş bırakılamaz");
       return;
     }
-    const updateBook = {
+    const updatedBook = {
       id: params.bookId,
-      name: bookname,
+      name: bookName,
       author: author,
       categoryId: category,
       isbn: isbn,
     };
-    console.log("updateBook", updateBook);
+    console.log("updatedBook", updatedBook);
     axios
-      .put(`http://localhost:3004/books/${params.bookId}`, updateBook)
+      .put(`http://localhost:3004/books/${params.bookId}`, updatedBook)
       .then((res) => {
         console.log(res);
+        dispatch({ type: "EDIT_BOOK", payload: updatedBook });
         setShowModal(false);
         navigate("/");
       })
       .catch((err) => console.log("edit error", err));
   };
 
-  if (categories === null) {
+  if (categoriesState.success !== true || booksState.success !== true) {
     return <Loading />;
   }
 
@@ -82,8 +104,8 @@ const EditBook = (props) => {
                 type="text"
                 className="form-control"
                 placeholder="Kitap Adı"
-                value={bookname}
-                onChange={(event) => setBookname(event.target.value)}
+                value={bookName}
+                onChange={(event) => setBookName(event.target.value)}
               />
             </div>
             <div className="col">
@@ -116,7 +138,7 @@ const EditBook = (props) => {
                 <option value={""} selected>
                   Kategori Seçin
                 </option>
-                {categories.map((cat) => {
+                {categoriesState.categories.map((cat) => {
                   return (
                     <option key={cat.id} value={cat.id}>
                       {cat.name}
@@ -143,7 +165,7 @@ const EditBook = (props) => {
       {showModal === true && (
         <Modal
           title="Kitap Güncelleme"
-          aciklama={`${bookname} kitabını güncellemek için onaylayın`}
+          aciklama={`${bookName} kitabını güncellemek için onaylayın`}
           onCancel={() => setShowModal(false)}
           onConfirm={editBook}
         />
