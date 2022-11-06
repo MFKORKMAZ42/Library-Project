@@ -16,6 +16,13 @@ There is added modals to approve deleting and editing processes.
 And also function of seach in books list is added with the last updated.</p>
 
 
+<h3> SITE VIEW LAST </h3> </br>
+
+![](https://github.com/MFKORKMAZ42/Library-Project/blob/master/libraryson.gif)
+
+<br/>
+<br/> 
+
 <h3> SITE VIEW </h3> </br>
 
 ![](https://github.com/MFKORKMAZ42/Library-Project/blob/master/giflibrary.gif)
