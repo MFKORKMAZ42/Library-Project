@@ -1,15 +1,39 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
+import Modal from "./Modal";
+import axios from "axios";
 
 const ListCategories = () => {
-  const { categoriesState } = useSelector((state) => state);
-  console.log("catState", categoriesState);
+  const dispatch = useDispatch();
+  const { categoriesState, booksState } = useSelector((state) => state);
+  console.log("booksState", booksState);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [silinecekCategory, setSilinecekCategory] = useState(null);
+  const [silinecekCategoryName, setSilinecekCategoryName] = useState();
 
   useEffect(() => {
     document.title = "Kitaplık - Kategoriler";
   }, []);
+
+  const categorySil = (id) => {
+    axios
+      .delete(`http://localhost:3004/categories/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        dispatch({ type: "DELETE_CATEGORY", payload: id });
+        const booksHasCategory = booksState.books.filter(
+          (item) => item.categoryId == id
+        );
+        console.log("booksHasCategory", booksHasCategory);
+        booksHasCategory.map((item) =>
+          dispatch({ type: "DELETE_BOOK", payload: item.id })
+        );
+      })
+      .catch((err) => console.log("deleteCategoryErr", err));
+  };
 
   if (categoriesState.success !== true) {
     return <Loading />;
@@ -43,16 +67,16 @@ const ListCategories = () => {
                       type="button"
                       className="btn btn-outline-danger btn-sm"
                       onClick={() => {
-                        // setShowModal(true);
-                        // // deleteBook(book.id)
-                        // setSilinecekKitap(book.id);
-                        // setSilinecekKitapIsmi(book.name);
+                        setShowDeleteModal(true);
+                        // deleteBook(book.id)
+                        setSilinecekCategory(category.id);
+                        setSilinecekCategoryName(category.name);
                       }}
                     >
                       Delete
                     </button>
                     <Link
-                      to={`edit-category/${category.id}`}
+                      to={`/edit-category/${category.id}`}
                       className="btn btn-sm btn-outline-secondary"
                     >
                       Edit
@@ -64,14 +88,14 @@ const ListCategories = () => {
           })}
         </tbody>
       </table>
-      {/* {showModal === true && (
+      {showDeleteModal === true && (
         <Modal
-          aciklama="Kitabını silmek istediğinize emin misiniz?"
-          title={silinecekKitapIsmi}
-          onConfirm={() => deleteBook(silincekKitap)}
-          onCancel={() => setShowModal(false)}
+          aciklama="Silmek istediğinize emin misiniz?"
+          title={silinecekCategoryName}
+          onConfirm={() => categorySil(silinecekCategory)}
+          onCancel={() => setShowDeleteModal(false)}
         />
-      )} */}
+      )}
     </div>
   );
 };

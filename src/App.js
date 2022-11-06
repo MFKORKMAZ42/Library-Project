@@ -7,6 +7,9 @@ import CategoriesList from "./pages/CategoriesList";
 import Home from "./pages/Home";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import AddCategory from "./pages/AddCategory";
+//import AddCategoryForm from "./compenents/AddCategoryForm";
+import EditCategory from "./pages/EditCategory";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +50,8 @@ function App() {
         <Route path="/add-book" element={<AddBook />} />
         <Route path="/edit-book/:bookId" element={<EditBook />} />
         <Route path="/categories" element={<CategoriesList />} />
+        <Route path="/add-category" element={<AddCategory />} />
+        <Route path="/edit-category/:categoryId" element={<EditCategory />} />
       </Routes>
     </BrowserRouter>
   );

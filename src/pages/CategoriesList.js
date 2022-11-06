@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "../compenents/Header";
 import ListCategories from "../compenents/ListCategories";
 

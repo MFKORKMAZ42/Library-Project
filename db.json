@@ -22,46 +22,40 @@
       "categoryId": "3"
     },
     {
-      "id": 1663061415184,
-      "name": "SEYİR",
-      "author": "PİRAYE",
-      "categoryId": "1",
-      "isbn": ""
-    },
-    {
       "id": 1663171107813,
-      "name": "Sineklerin Tanrısı 2",
-      "author": "William Golding  2",
+      "name": "Sineklerin Tanrısı ",
+      "author": "William Golding  ",
       "categoryId": "2",
-      "isbn": ""
+      "isbn": "33445566"
     },
     {
-      "id": 1663732651111,
-      "name": "abc xxx",
-      "author": "abcxxx",
-      "categoryId": "2",
-      "isbn": ""
-    },
-    {
-      "id": 1663863641248,
-      "name": "ghgfhn 123",
-      "author": "hngn 123",
-      "categoryId": "3",
-      "isbn": ""
+      "id": 1665082547129,
+      "name": "asd",
+      "author": "asd",
+      "isbn": "",
+      "categoryId": "1664981564623"
     }
   ],
   "categories": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Roman"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Hikaye"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Deneme"
+    },
+    {
+      "id": 1664981564623,
+      "name": "Şiir"
+    },
+    {
+      "id": 1665083646081,
+      "name": "Şi"
     }
   ]
 }
