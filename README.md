@@ -13,7 +13,7 @@
 
 <p>This app only have functions of add new book and category on data base, edit and delete a book and category saved in data base for now.
 There is added modals to approve deleting and editing processes.
-And also function of seach in books list is added with the last updated..</p>
+And also function of seach in books list is added with the last updated.</p>
 
 
 <h3> SITE VIEW LAST </h3> </br>
